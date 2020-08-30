@@ -6,8 +6,8 @@ RUN mkdir -p /opt/CTFd /var/log/CTFd /var/uploads
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
     apk update && \
     apk add \
-        python \
-        python-dev \
+        python3 \
+        python3-dev \
         linux-headers \
         libffi-dev \
         gcc \
