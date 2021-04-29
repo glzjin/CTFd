@@ -15,6 +15,9 @@ services:
       - LOG_FOLDER=/var/log/CTFd
       - ACCESS_LOG=-
       - ERROR_LOG=-
+      - TYPE_OF_ID=user_id
+      - ANNOUNCE_ID=919368842
+      - BOT_URL=http://172.17.0.1:5700
     volumes:
       - .data/CTFd/logs:/var/log/CTFd
       - .data/CTFd/uploads:/var/uploads

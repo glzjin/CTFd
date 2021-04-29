@@ -36,6 +36,43 @@
 			{% endfor %}
 		</select>
 	</div>
+	<div class="form-check">
+		<label>
+			<input id="isCSU" name="isCSU" type="checkbox" {% if user is defined and user.isCSU %}checked{% endif %}>
+			是否为校内选手
+			<br/>
+			(中南大学请勾选并填写后述信息便于后台统计。校外选手则不用填写)
+		</label>
+	</div>
+	<div id="CSU_info">
+		<div class="form-group">
+			<label for="real_name-input">
+				真实姓名
+			</label>
+			<input class="form-control" type="text" name="real_name" id="real_name-input"
+				   value="{% if user is defined and user.real_name %}{{user.real_name}}{% endif %}" />
+		</div>
+		<div class="form-group">
+			<label for="sid-input">
+				学号
+			</label>
+			<input class="form-control" type="text" name="sid" id="sid-input" value="{% if user is defined and user.sid %}{{ user.sid }}{% endif %}"/>
+		</div>
+		<div class="form-group">
+			<label for="school-input">
+				学院
+			</label>
+			<input class="form-control" type="text" name="school" id="school-input"
+				   value="{% if user is defined and user.school%}{{ user.school }}{% endif %}" />
+		</div>
+		<div class="form-group">
+			<label for="clazz-input">
+				专业班级
+			</label>
+			<input class="form-control" type="text" name="clazz" id="clazz-input"
+				   value="{% if user is defined and user.clazz %}{{ user.clazz }}{% endif %}" />
+		</div>
+	</div>
 	<div class="form-group">
 		<div class="form-check form-check-inline">
 			<select class="form-control form-inline custom-select" id="type-select" name="type">

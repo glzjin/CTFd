@@ -6,11 +6,12 @@ RUN mkdir -p /opt/CTFd /var/log/CTFd /var/uploads
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
     apk update && \
     apk add \
-        python \
-        python-dev \
+        python3 \
+        python3-dev \
         linux-headers \
         libffi-dev \
         gcc \
+	g++ \
         make \
         musl-dev \
         py-pip \
@@ -21,6 +22,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apk/rep
 COPY . /opt/CTFd
 
 RUN pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com -r requirements.txt
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com -U --force-reinstall --no-binary :all: gevent==1.4.0
 RUN for d in CTFd/plugins/*; do \
       if [ -f "$d/requirements.txt" ]; then \
         pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com -r $d/requirements.txt; \

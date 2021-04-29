@@ -32,6 +32,9 @@ from CTFd.utils.logging import log
 from CTFd.utils.modes import generate_account_url, get_model
 from CTFd.utils.security.signing import serialize
 from CTFd.utils.user import authed, get_current_team, get_current_user, is_admin
+import requests
+import threading
+import os
 
 challenges_namespace = Namespace(
     "challenges", description="Endpoint to retrieve Challenges"
@@ -288,6 +291,36 @@ class Challenge(Resource):
 
         return {"success": True}
 
+def send_msg_by_bot(type_of_id ,id, url, msg):
+    if type_of_id is None or id is None or url is None:
+        print("[-] send failed. env TYPE_OF_ID, ANNOUNCE_ID, BOT_URL not set.")
+        return
+
+    params = {
+        type_of_id: id,
+        "message": msg,
+    }
+
+    if type_of_id == "user_id":
+        url = url + "/send_private_msg"
+    else:
+        url = url + "/send_group_msg"
+
+    for i in range(3):
+        try:
+            r = requests.get(url=url, params=params, timeout=5)
+            print("[*] requests success. Below is response:\n {}".format(r.text))
+            break
+        except requests.exceptions.RequestException as e:
+            print("[-] requests failed.\n    ", end="")
+            print(e)
+
+def anounce_firstblood(user_name, challenge_name):
+    msg = "恭喜{}拿下{}题目一血".format(user_name, challenge_name)
+    t = threading.Thread(target=send_msg_by_bot,
+                         args=(os.getenv("TYPE_OF_ID"), os.getenv("ANNOUNCE_ID"), os.getenv("BOT_URL"), msg))
+    t.start()
+
 
 @challenges_namespace.route("/attempt")
 class ChallengeAttempt(Resource):
@@ -429,6 +462,14 @@ class ChallengeAttempt(Resource):
                     challenge_id=challenge_id,
                     kpm=kpm,
                 )
+
+                # announce first blood
+                solve_count = Solves.query.filter_by(challenge_id=challenge_id).count()
+                if solve_count == 1:
+                    user = get_current_user()
+                    challenge = Challenges.query.filter_by(id=challenge_id).first_or_404()
+                    anounce_firstblood(user.name, challenge.name)
+
                 return {
                     "success": True,
                     "data": {"status": "correct", "message": message},

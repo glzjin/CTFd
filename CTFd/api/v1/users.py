@@ -133,6 +133,8 @@ class UserPrivate(Resource):
     def get(self):
         user = get_current_user()
         response = UserSchema("self").dump(user).data
+        print("[*] The response is:",end="")
+        print(response)
         response["place"] = user.place
         response["score"] = user.score
         return {"success": True, "data": response}
@@ -141,6 +143,10 @@ class UserPrivate(Resource):
     def patch(self):
         user = get_current_user()
         data = request.get_json()
+        if data.get("isCSU") == False:
+            added_columns = ["sid", "real_name", "clazz", "school"]
+            for column in added_columns:
+                data[column] = ""
         schema = UserSchema(view="self", instance=user, partial=True)
         response = schema.load(data)
         if response.errors:

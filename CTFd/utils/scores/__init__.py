@@ -8,7 +8,7 @@ from CTFd.utils.modes import get_model
 
 
 @cache.memoize(timeout=60)
-def get_standings(count=None, admin=False):
+def get_standings(count=None, admin=False, isCSU=False):
     """
     Get standings as a list of tuples containing account_id, name, and score e.g. [(account_id, team_name, score)].
 
@@ -83,10 +83,13 @@ def get_standings(count=None, admin=False):
                 Model.id.label("account_id"),
                 Model.oauth_id.label("oauth_id"),
                 Model.name.label("name"),
+                Model.isCSU.label("isCSU"),
+                Model.real_name.label("real_name"),
                 Model.hidden,
                 Model.banned,
                 sumscores.columns.score,
             )
+            .filter(Model.isCSU == 1 if isCSU == True else True)
             .join(sumscores, Model.id == sumscores.columns.account_id)
             .order_by(sumscores.columns.score.desc(), sumscores.columns.id)
         )
@@ -96,10 +99,12 @@ def get_standings(count=None, admin=False):
                 Model.id.label("account_id"),
                 Model.oauth_id.label("oauth_id"),
                 Model.name.label("name"),
+                Model.isCSU.label("isCSU"),
                 sumscores.columns.score,
             )
             .join(sumscores, Model.id == sumscores.columns.account_id)
             .filter(Model.banned == False, Model.hidden == False)
+            .filter(Model.isCSU == 1 if isCSU == True else True)
             .order_by(sumscores.columns.score.desc(), sumscores.columns.id)
         )
 

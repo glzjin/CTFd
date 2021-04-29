@@ -3,7 +3,14 @@
 {% block content %}
 <div class="jumbotron">
 	<div class="container">
-		<h1>Scoreboard</h1>
+		<h1>Scoreboard
+		<a class="no-decoration" href="/admin/scoreboard/CSU">
+			<span role="button" data-toggle="tooltip" title="" data-original-title="校内选手排名">
+				<i class="btn-fa fa fa-plus-square">
+				</i>
+			</span>
+		</a>
+		</h1>
 	</div>
 </div>
 <div class="container">
@@ -16,6 +23,8 @@
 						<td><b>Team</b></td>
 						<td><b>Score</b></td>
 						<td><b>Visibility</b></td>
+						<td>校内选手</td>
+						<td>真实姓名</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,6 +58,16 @@
 								data-account-id="{{ standing.account_id }}" data-state="visible">Visible
 							</button>
 						{% endif %}
+						</td>
+                        <td>
+							{% if standing.isCSU %}
+								true
+							{% endif %}
+						</td>
+						<td>
+							{% if standing.real_name %}
+								{{ standing.real_name }}
+							{% endif %}
 						</td>
 					</tr>
 				{% endfor %}

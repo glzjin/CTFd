@@ -112,6 +112,33 @@
 				<small>points</small>
 			{% endif %}
 		</h3>
+		<h3 id="team-isCSU" class="text-center">
+			{% if user.isCSU %}
+			<small>校内选手</small>
+			{% else %}
+			<small>校外选手</small>
+			{% endif %}
+		</h3>
+		<h3 id="team-real_name" class="text-center">
+			{% if user.real_name %}
+            <small>真实姓名:</small>{{ user.real_name }}
+			{% endif %}
+		</h3>
+		<h3 id="team-sid" class="text-center">
+			{% if user.sid %}
+			<small>学号:</small>{{ user.sid }}
+			{% endif %}
+		</h3>
+		<h3 id="team-school" class="text-center">
+			{% if user.school %}
+			<small>学院:</small>{{ user.school }}
+			{% endif %}
+		</h3>
+		<h3 id="team-clazz" class="text-center">
+			{% if user.clazz %}
+			<small>专业班级:</small>{{ user.clazz }}
+			{% endif %}
+		</h3>
 		<div class="pt-3">
 			<a class="edit-user">
 				<i class="btn-fa fas fa-user-edit fa-2x px-2" data-toggle="tooltip" data-placement="top" title="Edit User"></i>

@@ -32,6 +32,7 @@
 							<option value="email" {% if field == 'email' %}selected{% endif %}>Email</option>
 							<option value="affiliation" {% if field == 'affiliation' %}selected{% endif %}>Affiliation</option>
 							<option value="ip" {% if field == 'ip' %}selected{% endif %}>IP Address</option>
+							<option value="isCSU" {% if field == 'isCSU' %}selected{% endif %}>校内选手</option>
 					  </select>
 					</div>
 					<div class="form-group col-md-8">
@@ -66,6 +67,16 @@
 						<td class="text-center"><b>Hidden</b>
 						</td>
 						<td class="text-center"><b>Banned</b>
+						</td>
+						<td class="text-center"><b>校内选手</b>
+						</td>
+						<td class="text-center"><b>真实姓名</b>
+						</td>
+						<td class="text-center"><b>学号</b>
+						</td>
+						<td class="text-center"><b>学院</b>
+						</td>
+						<td class="text-center"><b>专业班级</b>
 						</td>
 					</tr>
 				</thead>
@@ -125,6 +136,31 @@
 						<td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ user.banned }}">
 							{% if user.banned %}
 								<span class="badge badge-danger">banned</span>
+							{% endif %}
+						</td>
+						<td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ user.isCSU }}">
+							{% if user.isCSU %}
+								true
+							{% endif %}
+						</td>
+						<td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ user.real_name }}">
+							{% if user.real_name %}
+                            	{{user.real_name}}
+							{% endif %}
+						</td>
+						<td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ user.sid }}">
+							{% if user.sid %}
+                            	{{user.sid}}
+							{% endif %}
+						</td>
+						<td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ user.school }}">
+							{% if user.school %}
+                            	{{user.school}}
+							{% endif %}
+						</td>
+						<td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ user.clazz }}">
+							{% if user.clazz %}
+                            	{{user.clazz}}
 							{% endif %}
 						</td>
 					</tr>

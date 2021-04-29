@@ -174,6 +174,9 @@ def reset_password(data=None):
     return render_template("reset_password.html")
 
 
+def parse_iscsu(isCSU):
+    return 1 if isCSU == "on" else 0
+
 @auth.route("/register", methods=["POST", "GET"])
 @check_registration_visibility
 @ratelimit(method="POST", limit=10, interval=5)
@@ -183,6 +186,16 @@ def register():
         name = request.form.get("name", "").strip()
         email_address = request.form.get("email", "").strip().lower()
         password = request.form.get("password", "").strip()
+        # add columns
+        isCSU = request.form.get("isCSU", 0)
+        isCSU = parse_iscsu(isCSU)
+        print("[*] isCSU value: {}".format(isCSU))
+        print("[*] isCSU type is: ", end="")
+        print(type(isCSU))
+        real_name = request.form.get("real_name", "").strip()
+        sid = request.form.get("sid", "").strip()
+        school = request.form.get("school", "").strip()
+        clazz = request.form.get("clazz", "").strip()
 
         name_len = len(name) == 0
         names = Users.query.add_columns("name", "id").filter_by(name=name).first()
@@ -227,7 +240,8 @@ def register():
             )
         else:
             with app.app_context():
-                user = Users(name=name, email=email_address, password=password)
+                user = Users(name=name, email=email_address, password=password,
+                             real_name=real_name, sid=sid, school=school, clazz=clazz, isCSU=isCSU)
                 db.session.add(user)
                 db.session.commit()
                 db.session.flush()
@@ -259,6 +273,7 @@ def register():
         return redirect(url_for("challenges.listing"))
     else:
         return render_template("register.html", errors=errors)
+
 
 
 @auth.route("/login", methods=["POST", "GET"])

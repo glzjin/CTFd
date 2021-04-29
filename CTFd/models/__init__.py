@@ -234,6 +234,19 @@ class Users(db.Model):
     type = db.Column(db.String(80))
     secret = db.Column(db.String(128))
 
+    # added fields
+    sid = db.Column(db.String(20))
+    real_name = db.Column(db.String(128))
+    clazz = db.Column(db.String(128))
+    school = db.Column(db.String(128))
+    isCSU = db.Column(db.Integer)
+    if isCSU == 0:
+        sid = ""
+        real_name = ""
+        clazz = ""
+        school = ""
+        isCSU = ""
+
     # Supplementary attributes
     website = db.Column(db.String(128))
     affiliation = db.Column(db.String(128))

@@ -18,3 +18,14 @@ def listing():
         standings=standings,
         score_frozen=config.is_scoreboard_frozen(),
     )
+@scoreboard.route("/scoreboard/CSU")
+@check_score_visibility
+@cache.cached(timeout=60, key_prefix=make_cache_key)
+def listing_csu():
+    standings = get_standings(isCSU=True)
+    return render_template(
+        "scoreboard.html",
+        standings=standings,
+        score_frozen=config.is_scoreboard_frozen(),
+    )
+

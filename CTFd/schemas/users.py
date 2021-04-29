@@ -200,6 +200,11 @@ class UserSchema(ma.ModelSchema):
             "id",
             "oauth_id",
             "password",
+            "sid",
+            "real_name",
+            "clazz",
+            "school",
+            "isCSU"
         ],
         "admin": [
             "website",
@@ -217,6 +222,11 @@ class UserSchema(ma.ModelSchema):
             "password",
             "type",
             "verified",
+            "sid",
+            "real_name",
+            "clazz",
+            "school",
+            "isCSU"
         ],
     }
 

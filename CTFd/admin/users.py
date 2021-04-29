@@ -49,6 +49,12 @@ def users_listing():
                 .order_by(Users.id.asc())
                 .all()
             )
+        elif field == "isCSU":
+            users = (
+                Users.query.filter(Users.isCSU == 1)
+                .order_by(Users.id.asc())
+                .all()
+            )
 
         return render_template(
             "admin/users/users.html",
