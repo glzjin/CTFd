@@ -15,7 +15,7 @@ PyMySQL==0.9.3
 gunicorn==19.9.0
 normality==2.0.0
 dataset==1.1.2
-mistune==0.8.4
+mistune==2.0.3
 netaddr==0.7.19
 redis==3.3.11
 datafreeze==0.1.0
